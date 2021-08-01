@@ -202,3 +202,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
   }
 }
 ```
+redux通过函数 `createStore` 将构造 `store` 的方法暴露出来，`createStore` 接收三个参数 `reducer`，`preloadedState`， `enhancer`。
+- `reducer` 为必传参数，是整个store的核心部分，通过 `reducer` 更新 `store` 中的 `state` 。
+- `preloadedState` 为非必传参数，提供初始的 `state`，一般情况下不传这个参数，初始 `state` 在 `reducer` 中定义。
+- `enhancer` 为非必传参数，可以翻译成增强器。用于包装 `store`，增强其功能。
