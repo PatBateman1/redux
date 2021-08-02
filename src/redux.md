@@ -148,10 +148,6 @@ export default function createStore(reducer, preloadedState, enhancer) {
 
     currentReducer = nextReducer
 
-    // This action has a similiar effect to ActionTypes.INIT.
-    // Any reducers that existed in both the new and old rootReducer
-    // will receive the previous state. This effectively populates
-    // the new state tree with any relevant data from the old one.
     dispatch({ type: ActionTypes.REPLACE })
   }
 
@@ -188,9 +184,6 @@ export default function createStore(reducer, preloadedState, enhancer) {
     }
   }
 
-  // When a store is created, an "INIT" action is dispatched so that every
-  // reducer returns their initial state. This effectively populates
-  // the initial state tree.
   dispatch({ type: ActionTypes.INIT })
 
   return {
@@ -206,3 +199,12 @@ redux通过函数 `createStore` 将构造 `store` 的方法暴露出来，`creat
 - `reducer` 为必传参数，是整个store的核心部分，通过 `reducer` 更新 `store` 中的 `state` 。
 - `preloadedState` 为非必传参数，提供初始的 `state`，一般情况下不传这个参数，初始 `state` 在 `reducer` 中定义。
 - `enhancer` 为非必传参数，可以翻译成增强器。用于包装 `store`，增强其功能。
+
+注意，在 `createStore`以及 `replaceReducer` 执行完之前，`dispatch({ type: ActionTypes.INIT })` （`dispatch({ type: ActionTypes.REPLACE })`） 语句的执行保证了所有 `reducer` 返回了默认值。
+
+### 中间件与 redux-thunk
+中间件的定义：
+
+    It provides a third-party extension point between dispatching an action, and the moment it reaches
+    the reducer.
+
